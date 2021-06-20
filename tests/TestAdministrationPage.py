@@ -1,51 +1,49 @@
-import pytest
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.chrome import webdriver
-from selenium.webdriver.common.by import By
+from conftest import opencart
 
 
-@pytest.mark.parametrize("url", ['http://docs.opencart.com/en-gb/administration/'])
-def test_present_language(url):
-    driver = webdriver.ChromeRemoteConnection(url)
+def test_present_btn(browser):
+    browser.get(opencart + '/admin')
     try:
-        driver.find_element(By.XPATH, '//*[@id="documentation"]/div[3]/div/div[2]/div[1]/button')
-    except NoSuchElementException:
-        return False
-    driver.quit()
-    return True
-
-
-def test_present_filter(url):
-    driver = webdriver.ChromeRemoteConnection(url)
-    try:
-        driver.find_element(By.XPATH, '//*[@id="en-gb"]/ul/li[7]/ul/li[2]/a')
+        browser.find_element_by_css_selector(
+            '#content > div > div > div > div > div.panel-body > form > div.text-right > button')
     except NoSuchElementException:
         return False
     return True
 
 
-def test_present_image_manager(url):
-    driver = webdriver.ChromeRemoteConnection(url)
+def test_present_username(browser):
+    browser.get(opencart + '/admin')
     try:
-        driver.find_element(By.XPATH, '//*[@id="en-gb"]/ul/li[7]/ul/li[3]/a')
+        browser.find_element_by_css_selector('#input-username')
     except NoSuchElementException:
         return False
     return True
 
 
-def test_present_doc(url):
-    driver = webdriver.ChromeRemoteConnection(url)
+def test_present_password(browser):
+    browser.get(opencart + '/admin')
     try:
-        driver.find_element(By.XPATH, '//*[@id="documentation"]/div[3]/div/div[2]/p[4]/a')
+        browser.find_element_by_css_selector('#input-password')
     except NoSuchElementException:
         return False
     return True
 
 
-def test_present_text(url):
-    driver = webdriver.ChromeRemoteConnection(url)
+def test_present_logo(browser):
+    browser.get(opencart + '/admin')
     try:
-        driver.find_element(By.LINK_TEXT, 'Admin Interface')
+        browser.find_element_by_css_selector('#header-logo > a > img')
+    except NoSuchElementException:
+        return False
+    return True
+
+
+def test_present_forgotten(browser):
+    browser.get(opencart + '/admin')
+    try:
+        browser.find_element_by_css_selector(
+            '#content > div > div > div > div > div.panel-body > form > div:nth-child(2) > span > a')
     except NoSuchElementException:
         return False
     return True

@@ -5,12 +5,14 @@ from selenium import webdriver
 from selenium.webdriver.opera.options import Options as OperaOptions
 
 DRIVERS = os.path.expanduser("C:/chromedriver")
-opencart = "https://www.opencart.com/"
+opencart = "https://demo.opencart.com/"
+
 
 def pytest_addoption(parser):
     parser.addoption("--maximized", action="store_true", help="Maximize browser windows")
     parser.addoption("--headless", action="store_true", help="Run headless")
     parser.addoption("--browser", action="store", choices=["chrome", "firefox", "opera"], default="chrome")
+    parser.addoption("--url", action="store", default="https://demo.opencart.com/")
 
 
 @pytest.fixture(scope="session")
@@ -19,7 +21,7 @@ def browser(request):
     headless = request.config.getoption("--headless")
     maximized = request.config.getoption("--maximized")
 
-    if browser == " ":
+    if browser == "chrome":
         options = webdriver.ChromeOptions()
         options.headless = headless
 

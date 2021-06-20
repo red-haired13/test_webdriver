@@ -1,50 +1,47 @@
-import pytest
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.chrome import webdriver
-from selenium.webdriver.common.by import By
+from conftest import opencart
 
 
-@pytest.mark.parametrize("url", ['https://www.opencart.com/index.php?route=marketplace/extension'])
-def test_present_category(url):
-    driver = webdriver.ChromeRemoteConnection(url)
+def test_present_components(browser):
+    browser.get(opencart + '/category')
     try:
-        driver.find_element(By.CLASS_NAME, 'Category')
+        browser.find_element_by_css_selector('#content > div > div > ul > li:nth-child(1) > a')
     except NoSuchElementException:
         return False
     return True
 
 
-def test_present_languages(url):
-    driver = webdriver.ChromeRemoteConnection(url)
+def test_present_menu(browser):
+    browser.get(opencart + '/index.php?route=product/category&path=25')
     try:
-        driver.find_element(By.XPATH, '//*[@id="extension-category"]/ul/li[4]/a')
+        browser.find_element_by_css_selector('#column-left > div.list-group > a.list-group-item.active')
     except NoSuchElementException:
         return False
     return True
 
 
-def test_present_reports(url):
-    driver = webdriver.ChromeRemoteConnection(url)
+def test_present_home(browser):
+    browser.get(opencart + '/index.php?route=product/category&path=25')
     try:
-        driver.find_element(By.XPATH, '//*[@id="extension-category"]/ul/li[10]/a')
+        browser.find_element_by_css_selector('#product-category > ul > li:nth-child(1) > a > i')
     except NoSuchElementException:
         return False
     return True
 
 
-def test_present_menu(url):
-    driver = webdriver.ChromeRemoteConnection(url)
+def test_present_aboutus(browser):
+    browser.get(opencart + '/index.php?route=product/category&path=25')
     try:
-        driver.find_element(By.XPATH, '/html/body/header/nav/div/div[1]/button/span[2]')
+        browser.find_element_by_css_selector('body > footer > div > div > div:nth-child(1) > ul > li:nth-child(1) > a')
     except NoSuchElementException:
         return False
     return True
 
 
-def test_present_logo(url):
-    driver = webdriver.ChromeRemoteConnection(url)
+def test_present_logo(browser):
+    browser.get(opencart + '/index.php?route=product/category&path=25')
     try:
-        driver.find_element(By.XPATH, '/html/body/header/nav/div/div[1]/a/img')
+        browser.find_element_by_css_selector('#logo > h1 > a')
     except NoSuchElementException:
         return False
     return True
